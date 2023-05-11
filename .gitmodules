@@ -1,3 +1,6 @@
 [submodule "app"]
 	path = app
 	url = https://github.com/Dimokrati/Web3.0.git
+[submodule "Smart-Contract"]
+	path = Smart-Contract
+	url = https://github.com/Dimokrati/Smart-Contract.git
