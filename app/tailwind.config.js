@@ -17,5 +17,7 @@ export default {
       '2xl': '1536px', // new breakpoint
     },
   },
-  plugins: [],
+  plugins: [
+    
+  ],
 }

@@ -29,32 +29,28 @@ export const TransactionsProvider = ({ children }) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
-  // const getAllTransactions = async () => {
-  //   try {
-  //     if (ethereum) {
-  //       const transactionsContract = createEthereumContract();
-
-  //       const availableTransactions = await transactionsContract.getAllTransactions();
-
-  //       const structuredTransactions = availableTransactions.map((transaction) => ({
-  //         addressTo: transaction.receiver,
-  //         addressFrom: transaction.sender,
-  //         timestamp: new Date(transaction.timestamp.toNumber() * 1000).toLocaleString(),
-  //         message: transaction.message,
-  //         keyword: transaction.keyword,
-  //         amount: parseInt(transaction.amount._hex) / (10 ** 18)
-  //       }));
-
-  //       console.log(structuredTransactions);
-
-  //       setTransactions(structuredTransactions);
-  //     } else {
-  //       console.log("Ethereum is not present");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getAllTransactions = async () => {
+    try {
+      if (ethereum) {
+        const web3 = new Web3('https://eth-sepolia.g.alchemy.com/v2/zYtlq26CXtT6c9fdA1DC9h74HSzS1t7G');
+        const Contract = new web3.eth.Contract(contractABI, contractAddress,{from:currentAccount});
+        
+        const blockN = await Contract.methods.getAllTransactions().call()
+        // // const tr = block.transactions[0];
+        // // const  tx = await web3.eth.getTransaction(tr)
+        console.log(blockN)
+        
+        const availableTransactions = await web3.eth.getBalance("0xCD732C18ADB083a9bFb545B54Ef6BaAa306dA2aB");
+        const gg = await web3.utils.fromWei(availableTransactions, "ether")
+        console.log(gg)
+       
+      } else {
+        console.log("Ethereum is not present");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const checkIfWalletIsConnect = async () => {
     try {
@@ -64,7 +60,8 @@ export const TransactionsProvider = ({ children }) => {
 
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
-
+        
+        getAllTransactions();
       } else {
         console.log("No accounts found");
       }
@@ -87,6 +84,10 @@ export const TransactionsProvider = ({ children }) => {
   //     throw new Error("No ethereum object");
   //   }
   // };
+
+
+
+
 
   const connectWallet = async () => {
     try {
@@ -123,7 +124,7 @@ export const TransactionsProvider = ({ children }) => {
         const transactionHash = await (await transactionsContract).methods.addToBlockchain(addressTo, parsedAmount, message, keyword).send({from:currentAccount});
         setIsLoading(true);
         console.log(`Loading - ${transactionHash.transactionHash}`);
-        await transactionHash.wait();
+        // await transactionHash.wait();
         // await transactionHash.once("receipt", (receipt) => {
         //   console.log(`Transaction confirmed with block number ${receipt.blockNumber}`);
         //   setIsLoading(false);
@@ -131,10 +132,11 @@ export const TransactionsProvider = ({ children }) => {
         console.log(`Success - ${transactionHash.transactionHash}`);
         setIsLoading(false);
 
-        const transactionsCount = await transactionsContract.getTransactionCount();
+        const transactionsCount = (await transactionsContract).methods.getTransactionCount().call();
 
-        setTransactionCount(transactionsCount.toNumber());
-        console.log(transactionsContract);
+        setTransactionCount( await transactionsCount)
+        // const Count = await transactionsCount;
+        // console.log(Count);
         window.location.reload();
       } else {
         console.log("No ethereum object");
@@ -162,7 +164,7 @@ export const TransactionsProvider = ({ children }) => {
         sendTransaction,
         isLoading,
         transactionCount,
-        
+        getAllTransactions,
       }}
     >
       {children}
