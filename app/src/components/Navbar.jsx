@@ -6,7 +6,7 @@ import { TransactionContext } from "../context/TransactionsContext";
 
 
 const NavBarItem = ({ title, classprops }) => (
-  <a href={`/${classprops}`} className={`cursor-pointer mx-4`}>{title}</a>
+  <a href='#'className={`cursor-pointer mx-4`}>{title}</a>
 );
 
 const Navbar = () => {

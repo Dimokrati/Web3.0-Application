@@ -24,6 +24,7 @@ export const TransactionsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"));
   const [transactions, setTransactions] = useState([]);
+  const [balance, setBalance] = useState(0);
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -32,17 +33,17 @@ export const TransactionsProvider = ({ children }) => {
   const getAllTransactions = async () => {
     try {
       if (ethereum) {
-        const web3 = new Web3('https://eth-sepolia.g.alchemy.com/v2/zYtlq26CXtT6c9fdA1DC9h74HSzS1t7G');
+        const web3 = await new Web3('https://eth-sepolia.g.alchemy.com/v2/zYtlq26CXtT6c9fdA1DC9h74HSzS1t7G');
         const Contract = new web3.eth.Contract(contractABI, contractAddress,{from:currentAccount});
         
-        const blockN = await Contract.methods.getAllTransactions().call()
+        const trans = await Contract.methods.getAllTransactions().call()
         // // const tr = block.transactions[0];
         // // const  tx = await web3.eth.getTransaction(tr)
-        console.log(blockN)
+        setTransactions(trans);
         
-        const availableTransactions = await web3.eth.getBalance("0xCD732C18ADB083a9bFb545B54Ef6BaAa306dA2aB");
-        const gg = await web3.utils.fromWei(availableTransactions, "ether")
-        console.log(gg)
+        const availableTransactions = await web3.eth.getBalance('0xCD732C18ADB083a9bFb545B54Ef6BaAa306dA2aB');
+        const balanc = await web3.utils.fromWei(availableTransactions, "ether")
+        setBalance(balanc);
        
       } else {
         console.log("Ethereum is not present");
@@ -57,11 +58,11 @@ export const TransactionsProvider = ({ children }) => {
       if (!ethereum) return alert("Please install MetaMask.");
 
       const accounts = await ethereum.request({ method: "eth_accounts" });
-
+      console.log(currentAccount)
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
+        await getAllTransactions();
         
-        getAllTransactions();
       } else {
         console.log("No accounts found");
       }
@@ -96,7 +97,9 @@ export const TransactionsProvider = ({ children }) => {
       const accounts = await ethereum.request({ method: "eth_requestAccounts", });
 
       setCurrentAccount(accounts[0]);
+      
       window.location.reload();
+      window.location.replace('/dashboard/balance')
     } catch (error) {
       console.log(error);
 
@@ -155,7 +158,7 @@ export const TransactionsProvider = ({ children }) => {
   return (
     <TransactionContext.Provider
       value={{
-        
+        transactions,
         connectWallet,
         currentAccount,
         formData,
@@ -164,7 +167,8 @@ export const TransactionsProvider = ({ children }) => {
         sendTransaction,
         isLoading,
         transactionCount,
-        getAllTransactions,
+        balance,
+       
       }}
     >
       {children}

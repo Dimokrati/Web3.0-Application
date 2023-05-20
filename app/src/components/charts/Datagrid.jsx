@@ -1,18 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
+import { colors } from '@mui/material';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'id', headerName: 'ID', width: 90, headerClassName: 'super-app-theme--header', },
   {
     field: 'firstName',
     headerName: 'First name',
+    headerClassName: 'super-app-theme--header',
     width: 150,
     editable: true,
   },
   {
     field: 'lastName',
     headerName: 'Last name',
+    headerClassName: 'super-app-theme--header',
     width: 150,
     editable: true,
   },
@@ -20,12 +23,14 @@ const columns = [
     field: 'age',
     headerName: 'Age',
     type: 'number',
+    headerClassName: 'super-app-theme--header',
     width: 110,
     editable: true,
   },
   {
     field: 'fullName',
     headerName: 'Full name',
+    headerClassName: 'super-app-theme--header',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
     width: 160,
@@ -51,19 +56,22 @@ const rows = [
 
 export default function Datagrid() {
   return (
-    <Box sx={{ height: 370, width: '100%' }}>
+    <Box sx=
+    {{ height: '100%', width: '100%',  
+    
+    }}>
       <DataGrid
         rows={rows}
         columns={columns}
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 6,
+              pageSize: 12,
             },
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
+        
         disableRowSelectionOnClick
       />
     </Box>

@@ -9,13 +9,18 @@ const Area = () => {
     const options = {
         chart: {
           height: 350,
-          type: 'area'
+          type: 'area',
+          
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
+        
+        
+       
+        
         stroke: {
-          curve: 'smooth'
+          curve: 'smooth',
         },
         xaxis: {
           type: 'datetime',
@@ -26,7 +31,8 @@ const Area = () => {
             "2018-09-19T03:30:00.000Z", 
             "2018-09-19T04:30:00.000Z",
             "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z"]
+            "2018-09-19T06:30:00.000Z"],
+          
         },
         tooltip: {
           x: {
@@ -36,7 +42,7 @@ const Area = () => {
       };
     return (
         <div>
-            <ReactApexChart options={options} series={series} type="area" height={360} />
+            <ReactApexChart options={options} series={series} type="area"  height={"540px"}/>
         </div>
     )
 };

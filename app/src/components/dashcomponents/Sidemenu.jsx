@@ -29,7 +29,7 @@ export default function Sidemenu() {
                 </ul>
             </div>
         </nav> */}
-        <div className="flex bg-gray-800 h-screen z-0">
+        {/* <div className="flex bg-gray-800 h-screen z-0">
             <div className="sm:flex flex-col h-screen p-3 bg-blue-300 shadow w-60 hidden z-50">
                 <div className="space-y-3">
                     <div className="flex-1">
@@ -98,7 +98,7 @@ export default function Sidemenu() {
                         <Area />
                     </div>
                     <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
-                    <div className="text-sm font-medium text-gray-500 truncate">
+                        <div className="text-sm font-medium text-gray-500 truncate">
                             Balance
                         </div>
                         <div className="mt-1 text-3xl font-semibold text-gray-900">
@@ -115,8 +115,59 @@ export default function Sidemenu() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> */}
             
+            {/* <div class="p-4 sm:ml-64">
+            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center h-full w-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
+                    <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    <Area />
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center h-full mb-4 rounded bg-gray-50 dark:bg-gray-800">
+                    <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    <Datagrid />
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+                        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+                    </div>
+                </div>
+            </div>
+            </div> */}
         </>
     );
 }
