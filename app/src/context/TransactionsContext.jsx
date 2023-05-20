@@ -34,14 +34,11 @@ export const TransactionsProvider = ({ children }) => {
     try {
       if (ethereum) {
         const web3 = await new Web3('https://eth-sepolia.g.alchemy.com/v2/zYtlq26CXtT6c9fdA1DC9h74HSzS1t7G');
+        const accounts = await ethereum.request({ method: "eth_accounts" });
         const Contract = new web3.eth.Contract(contractABI, contractAddress,{from:currentAccount});
-        
         const trans = await Contract.methods.getAllTransactions().call()
-        // // const tr = block.transactions[0];
-        // // const  tx = await web3.eth.getTransaction(tr)
         setTransactions(trans);
-        
-        const availableTransactions = await web3.eth.getBalance('0xCD732C18ADB083a9bFb545B54Ef6BaAa306dA2aB');
+        const availableTransactions = await web3.eth.getBalance(accounts[0]);
         const balanc = await web3.utils.fromWei(availableTransactions, "ether")
         setBalance(balanc);
        
@@ -59,6 +56,7 @@ export const TransactionsProvider = ({ children }) => {
 
       const accounts = await ethereum.request({ method: "eth_accounts" });
       console.log(currentAccount)
+      console.log(accounts)
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
         await getAllTransactions();
