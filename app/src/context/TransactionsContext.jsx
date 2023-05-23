@@ -35,15 +35,17 @@ export const TransactionsProvider = ({ children }) => {
       if (ethereum) {
         const web3 = await new Web3('https://eth-sepolia.g.alchemy.com/v2/zYtlq26CXtT6c9fdA1DC9h74HSzS1t7G');
         const Contract = new web3.eth.Contract(contractABI, contractAddress,{from:currentAccount});
-        
+        const accounts = await ethereum.request({ method: "eth_accounts" });
+      
         const trans = await Contract.methods.getAllTransactions().call()
         // // const tr = block.transactions[0];
         // // const  tx = await web3.eth.getTransaction(tr)
+        console.log(trans)
         setTransactions(trans);
         
-        const availableTransactions = await web3.eth.getBalance('0xCD732C18ADB083a9bFb545B54Ef6BaAa306dA2aB');
-        const balanc = await web3.utils.fromWei(availableTransactions, "ether")
-        setBalance(balanc);
+        const availableTransactions = await web3.eth.getBalance(accounts[0]);
+        const balanc = web3.utils.fromWei(availableTransactions, "ether")
+        await setBalance(Math.round(balanc * 1000 ) / 1000);
        
       } else {
         console.log("Ethereum is not present");
@@ -58,7 +60,8 @@ export const TransactionsProvider = ({ children }) => {
       if (!ethereum) return alert("Please install MetaMask.");
 
       const accounts = await ethereum.request({ method: "eth_accounts" });
-      console.log(currentAccount)
+      
+      setCurrentAccount(accounts[0]);
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
         await getAllTransactions();
@@ -96,8 +99,8 @@ export const TransactionsProvider = ({ children }) => {
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts", });
 
-      setCurrentAccount(accounts[0]);
       
+      console.log(currentAccount)
       window.location.reload();
       window.location.replace('/dashboard/balance')
     } catch (error) {
@@ -140,6 +143,7 @@ export const TransactionsProvider = ({ children }) => {
         setTransactionCount( await transactionsCount)
         // const Count = await transactionsCount;
         // console.log(Count);
+        alert('Transaction send succusfully')
         window.location.reload();
       } else {
         console.log("No ethereum object");

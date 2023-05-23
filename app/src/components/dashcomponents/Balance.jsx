@@ -47,7 +47,7 @@ const Balance = () => {
                                     Balance
                                 </div>
                                 <div className="mt-1 text-3xl font-semibold ">
-                                    {balance} Eth
+                                    {balance}Eth
                                 </div>
                             </div>
                         </div>

@@ -43,7 +43,7 @@ const Trans = () => {
     <>
         <div className="bg-[#121726] sm:ml-64">
             <div className="p-4">
-                <p className="text-xl text-white font-bold">Dashboard / Balance</p>
+                <p className="text-xl text-white font-bold">Dashboard / Transactions</p>
             </div>
         </div>
             <div className='ml-64 bg-[#121726] h-screen gap-4 grid grid-cols-2'>
