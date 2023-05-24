@@ -5,11 +5,15 @@ import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { CgMenu } from "react-icons/cg";
 import Area from "../charts/Area";
+import { shortenAddressexp } from '../../utils/shortenaddress';
 import Datagrid from "../charts/Datagrid";
 import { TransactionContext } from '../../context/TransactionsContext';
+import {AiFillDollarCircle} from 'react-icons/ai';
+import {FaBitcoin} from 'react-icons/fa';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const Balance = () => {
-    const { balance } = useContext(TransactionContext);
+    const { balance, currentAccount, fetched } = useContext(TransactionContext);
     return (
     <div>
        <div className="bg-[#121726] sm:ml-64">
@@ -31,10 +35,10 @@ const Balance = () => {
                                         <BsInfoCircle fontSize={17} color="#fff" />
                                     </div>
                                     <div>
-                                        <p className="text-white font-light text-sm">
-                                            Address
+                                        <p className="text-white font-light text-xl">
+                                            {currentAccount ? shortenAddressexp( currentAccount) : "Address"}
                                         </p>
-                                        <p className="text-white font-semibold text-lg mt-1">
+                                        <p className="text-white font-semibold text-[22px] mt-1">
                                             Ethereum
                                         </p>
                                     </div>
@@ -42,22 +46,79 @@ const Balance = () => {
                             </div>
                         </div>
                         <div className="grid-cols-1">
-                            <div className="w-full  h-full px-4 py-5 bg-white rounded-lg shadow">
-                                <div className="text-sm font-medium text-gray-300 truncate">
-                                    Balance
-                                </div>
-                                <div className="mt-1 text-3xl font-semibold ">
-                                    {balance}Eth
-                                </div>
+                            <div className="w-full  h-full px-4 py-5 bg-white rounded-lg ">
+                                <div className="text-sm font-medium text-gray-500 truncate leading-normal ">
+                                        Balance
+                                    </div>
+                                {balance ? (
+                                    <>
+                                    <div className="flex flex-col justify-center items-center h-5/6 text-[50px] font-mono font-semibold ">
+                                        <div className='leading-9 tracking-tighter '>
+                                            {balance}
+                                        </div>
+                                        <div className='leading-none tracking-tighter '>
+                                        ETH
+                                        </div>
+                                    </div>
+                                    </>
+                                ) : (<div className='h-full w-full flex justify-center items-center'><InfinitySpin width='200' color="#3771fa"/></div>)}
                             </div>
                         </div>
                         <div className=" grid-cols-1"> 
                             <div className="w-full  h-full px-4 py-5 bg-white rounded-lg shadow">
-                                <div className="text-sm font-medium text-gray-300 truncate">
-                                    Balance
+                                <div className="text-sm font-medium text-gray-500 truncate">
+                                    Equivalence
                                 </div>
-                                <div className="mt-1 text-3xl font-semibold ">
-                                    20ETH
+                                <div className="flex gap-4 justify-center items-center flex-col h-full ">
+                                    {balance ? (
+                                        <>
+                                        <div className='  bg-white w-full h-2/6 flex items-center justify-start p-4 rounded-2xl drop-shadow-2xl'>
+                                        <AiFillDollarCircle className='text-5xl text-green-400'/>
+                                        <div className='ml-2 flex justify-between w-full'>
+                                            <div>
+                                                <p className='text-gray-700 mt-1'>
+                                                    US Dollar
+                                                </p>
+                                                <p className='text-xs text-gray-500'>
+                                                    (Usd)
+                                                </p>
+                                            </div>
+                                            <div className='mr-3'>
+                                                <p className='text-gray-700 text-2xl font-semibold'>
+                                                    {Math.round(fetched['USD'] * balance * 10000) / 10000} Usd
+                                                </p>
+                                                <p className='text-xs text-gray-500'>
+                                                    1Eth == { fetched['USD']}Usd
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='bg-white   w-full h-2/6 flex items-center justify-start p-4 rounded-2xl drop-shadow-2xl '>
+                                        <FaBitcoin  className='text-5xl text-yellow-300 '/>
+                                        <div className='ml-2 p-1 flex justify-between w-full'>
+                                            <div>
+                                                <p className='text-gray-700 mt-1'>
+                                                    Bitcoin
+                                                </p>
+                                                <p className='text-xs text-gray-500'>
+                                                    (Btc)
+                                                </p>
+                                            </div>
+                                            <div className='mr-3'>
+                                                <p className='text-gray-700 text-2xl font-semibold'>
+                                                    {Math.round(fetched['BTC'] * balance * 10000) / 10000} Btc
+                                                </p>
+                                                <p className='text-xs text-gray-500'>
+                                                    1Eth == { fetched['BTC']}Btc
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </>
+                                    ) : (<InfinitySpin 
+                                        width='200'
+                                        color="#3771fa"
+                                      />)}
                                 </div>
                             </div>
                         </div>

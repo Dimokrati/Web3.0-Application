@@ -81,6 +81,32 @@ body {
     radial-gradient(at 53% 75%, hsla(174,94%,68%,1) 0, transparent 45%);
 }
 
+.balance_card{
+  
+
+
+  /* ff 3.6+ */
+  background:-moz-linear-gradient(338deg, rgba(225, 130, 238, 0.77) 0%, rgba(197, 0, 255, 0.58) 1%, rgba(163, 130, 238, 0.54) 56%, rgba(130, 205, 238, 0.5) 76%, rgba(130, 205, 238, 0.5) 99%); 
+
+  /* safari 5.1+,chrome 10+ */
+  background:-webkit-linear-gradient(338deg, rgba(225, 130, 238, 0.77) 0%, rgba(197, 0, 255, 0.58) 1%, rgba(163, 130, 238, 0.54) 56%, rgba(130, 205, 238, 0.5) 76%, rgba(130, 205, 238, 0.5) 99%);
+
+  /* opera 11.10+ */
+  background:-o-linear-gradient(338deg, rgba(225, 130, 238, 0.77) 0%, rgba(197, 0, 255, 0.58) 1%, rgba(163, 130, 238, 0.54) 56%, rgba(130, 205, 238, 0.5) 76%, rgba(130, 205, 238, 0.5) 99%);
+
+  /* ie 6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E182EE', endColorstr='#82CDEE', GradientType=1 );
+
+  /* ie 10+ */
+  background:-ms-linear-gradient(338deg, rgba(225, 130, 238, 0.77) 0%, rgba(197, 0, 255, 0.58) 1%, rgba(163, 130, 238, 0.54) 56%, rgba(130, 205, 238, 0.5) 76%, rgba(130, 205, 238, 0.5) 99%);
+
+  /* global 94%+ browsers support */
+  background:linear-gradient(338deg, rgba(225, 130, 238, 0.77) 0%, rgba(197, 0, 255, 0.58) 1%, rgba(163, 130, 238, 0.54) 56%, rgba(130, 205, 238, 0.5) 76%, rgba(130, 205, 238, 0.5) 99%);
+
+
+}
+
+
 .text-gradient {
   background-color: #fff;
   background-image: radial-gradient(at 120% 110%, rgb(0, 0, 0) 0, transparent 53%), radial-gradient(at 20% -20%, rgb(0, 0, 0) 0, transparent 50%);

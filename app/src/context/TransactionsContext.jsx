@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import { ethers } from "ethers";
 import Web3 from 'web3';
+import axios from "axios";
+import { useDisconnect } from 'wagmi';
 
 import { contractABI, contractAddress } from "../utils/constants";
 
@@ -25,6 +28,7 @@ export const TransactionsProvider = ({ children }) => {
   const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"));
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
+  const [fetched, setFetched] = useState([])
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -40,7 +44,7 @@ export const TransactionsProvider = ({ children }) => {
         const trans = await Contract.methods.getAllTransactions().call()
         // // const tr = block.transactions[0];
         // // const  tx = await web3.eth.getTransaction(tr)
-        console.log(trans)
+       
         setTransactions(trans);
         
         const availableTransactions = await web3.eth.getBalance(accounts[0]);
@@ -65,7 +69,7 @@ export const TransactionsProvider = ({ children }) => {
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
         await getAllTransactions();
-        
+       
       } else {
         console.log("No accounts found");
       }
@@ -73,23 +77,6 @@ export const TransactionsProvider = ({ children }) => {
       console.log(error);
     }
   };
-
-  // const checkIfTransactionsExists = async () => {
-  //   try {
-  //     if (ethereum) {
-  //       const transactionsContract = createEthereumContract();
-  //       const currentTransactionCount = await transactionsContract.getTransactionCount();
-
-  //       window.localStorage.setItem("transactionCount", currentTransactionCount);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-
-  //     throw new Error("No ethereum object");
-  //   }
-  // };
-
-
 
 
 
@@ -155,8 +142,29 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  
+  const disconnectWallet = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const ethereum = window.ethereum;
+  
+      // Check if the user is currently connected to a wallet
+      if (ethereum.isConnected()) {
+        // Prompt user to manually disconnect from Metamask
+        alert('Please disconnect from Metamask manually by clicking on the Metamask extension icon and choosing the disconnect option.');
+        window.location.replace('/')
+      } else {
+        // User is not connected to a wallet
+        console.log('Metamask is not connected.');
+      }
+    } else {
+      // Metamask is not installed or unavailable
+      console.log('Metamask is not installed or unavailable.');
+    }
+  };
+
   useEffect(() => {
     checkIfWalletIsConnect();
+    axios.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,BTC').then(res => setFetched(res.data)).catch(err => console.log(err))
   }, []);
 
   return (
@@ -172,7 +180,8 @@ export const TransactionsProvider = ({ children }) => {
         isLoading,
         transactionCount,
         balance,
-       
+        fetched,
+        disconnectWallet,
       }}
     >
       {children}
