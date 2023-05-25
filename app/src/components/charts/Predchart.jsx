@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import ReactApexChart from 'react-apexcharts';
 
 const Predchart = () => {
+    
     const series = [{
         data: [
           [1327359600000,30.95],

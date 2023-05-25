@@ -1,45 +1,89 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import { TransactionContext } from '../../context/TransactionsContext';
 
 const Area = () => {
-    const series = [{
-            name: 'Balance',
-            data: [31, 40, 28, 51, 42, 109, 100]
-        },];
-    const options = {
-        chart: {
-          height: 350,
-          type: 'area',
-          
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        
-        
-       
-        
-        stroke: {
-          curve: 'smooth',
-        },
-        xaxis: {
-          type: 'datetime',
-          categories: [
-            "2018-09-19T00:00:00.000Z", 
-            "2018-09-19T01:30:00.000Z", 
-            "2018-09-19T02:30:00.000Z", 
-            "2018-09-19T03:30:00.000Z", 
-            "2018-09-19T04:30:00.000Z",
-            "2018-09-19T05:30:00.000Z",
-            "2018-09-19T06:30:00.000Z"],
-          
-        },
-        tooltip: {
-          x: {
-            format: 'dd/MM/yy HH:mm'
-          },
-        },
-      };
+  const { ethData } = useContext(TransactionContext);
+  const data = [];
+  for (const dictionary of ethData) {
+    // Extract the desired values and store them in a separate list
+    const valuesList = [dictionary.time * 1000 , dictionary.high];
+  
+    // Add the new list to the list of lists
+    data.push(valuesList);
+  }
+
+
+  const series = [{
+    data: data,
+    name: 'ETH Price'
+  }];
+
+ 
+
+const options = {
+    chart: {
+      id: 'area-datetime',
+      type: 'area',
+      height: 350,
+      zoom: {
+        autoScaleYaxis: true
+      }
+    },
+    annotations: {
+      yaxis: [{
+        y: 30,
+        borderColor: '#999',
+        label: {
+          show: true,
+          text: 'Support',
+          style: {
+            color: "#fff",
+            background: '#00E396'
+          }
+        }
+      }],
+      xaxis: [{
+        x: new Date('13 Feb 2023').getTime(),
+        borderColor: '#999',
+        yAxisIndex: 0,
+        label: {
+          show: true,
+          text: 'Start',
+          style: {
+            color: "#fff",
+            background: '#775DD0'
+          }
+        }
+      }]
+    },
+    dataLabels: {
+      enabled: false
+    },
+    markers: {
+      size: 0,
+      style: 'hollow',
+    },
+    xaxis: {
+      type: 'datetime',
+      min: new Date('09 Jan 2022').getTime(),
+      tickAmount: 6,
+    },
+    tooltip: {
+      x: {
+        format: 'dd MMM yyyy'
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.7,
+        opacityTo: 0.9,
+        stops: [0, 100]
+      }
+    },
+  };
     return (
         <div>
             <ReactApexChart options={options} series={series} type="area"  height={"540px"}/>

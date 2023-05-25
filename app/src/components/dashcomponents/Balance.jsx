@@ -51,8 +51,8 @@ const Balance = () => {
                                         Balance
                                     </div>
                                 {balance ? (
-                                    <>
-                                    <div className="flex flex-col justify-center items-center h-5/6 text-[50px] font-mono font-semibold ">
+                                    <div className='flex justify-center h-5/6 mt-3 items-center gap-4'>
+                                    <div className="flex flex-col rounded-full shadow-2xl w-48 justify-center text-gray-700 items-center h-48 text-[50px] font-mono font-semibold ">
                                         <div className='leading-9 tracking-tighter '>
                                             {balance}
                                         </div>
@@ -60,7 +60,10 @@ const Balance = () => {
                                         ETH
                                         </div>
                                     </div>
-                                    </>
+                                    <div className="w-48 h-48 rounded-full border-2 border-gray-700 flex justify-center items-center">
+                                        <SiEthereum fontSize={60} className="text-gray-700" />
+                                    </div>
+                                    </div>
                                 ) : (<div className='h-full w-full flex justify-center items-center'><InfinitySpin width='200' color="#3771fa"/></div>)}
                             </div>
                         </div>
@@ -83,7 +86,7 @@ const Balance = () => {
                                                     (Usd)
                                                 </p>
                                             </div>
-                                            <div className='mr-3'>
+                                            <div className='mr-3 flex flex-col items-end'>
                                                 <p className='text-gray-700 text-2xl font-semibold'>
                                                     {Math.round(fetched['USD'] * balance * 10000) / 10000} Usd
                                                 </p>
@@ -104,7 +107,7 @@ const Balance = () => {
                                                     (Btc)
                                                 </p>
                                             </div>
-                                            <div className='mr-3'>
+                                            <div className='mr-3  flex flex-col items-end'>
                                                 <p className='text-gray-700 text-2xl font-semibold'>
                                                     {Math.round(fetched['BTC'] * balance * 10000) / 10000} Btc
                                                 </p>
@@ -122,7 +125,7 @@ const Balance = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white lg:col-span-3 col-span-1 rounded-lg row-span-2"><Area /></div>
+                        <div className="bg-white h-[555px] lg:col-span-3 col-span-1 rounded-lg row-span-2"><Area /></div>
                     
                     
                 </div>

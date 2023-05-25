@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Web3 from 'web3';
 import axios from "axios";
-import { useDisconnect } from 'wagmi';
+
 
 import { contractABI, contractAddress } from "../utils/constants";
 
@@ -29,6 +29,7 @@ export const TransactionsProvider = ({ children }) => {
   const [transactions, setTransactions] = useState([]);
   const [balance, setBalance] = useState(0);
   const [fetched, setFetched] = useState([])
+  const [ethData, setEthData] = useState([]);
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -150,7 +151,7 @@ export const TransactionsProvider = ({ children }) => {
       // Check if the user is currently connected to a wallet
       if (ethereum.isConnected()) {
         // Prompt user to manually disconnect from Metamask
-        alert('Please disconnect from Metamask manually by clicking on the Metamask extension icon and choosing the disconnect option.');
+        alert('Please disconnect from Metamask manually: \n1) Click on the Metamask extension icon. \n2) Choose the disconnect option. \n3) Click on 3 points options then disconnect your account.');
         window.location.replace('/')
       } else {
         // User is not connected to a wallet
@@ -164,7 +165,8 @@ export const TransactionsProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnect();
-    axios.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,BTC').then(res => setFetched(res.data)).catch(err => console.log(err))
+    axios.get('https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD,BTC').then(res => setFetched(res.data)).catch(err => console.log(err));
+    axios.get('https://min-api.cryptocompare.com/data/v2/histoday?fsym=ETH&tsym=USD&limit=500').then(res => setEthData(res.data.Data.Data)).catch(err => console.log(err));
   }, []);
 
   return (
@@ -182,6 +184,7 @@ export const TransactionsProvider = ({ children }) => {
         balance,
         fetched,
         disconnectWallet,
+        ethData,
       }}
     >
       {children}
