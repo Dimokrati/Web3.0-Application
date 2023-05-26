@@ -2,6 +2,7 @@ import React, {useState , useEffect ,useContext} from 'react'
 import ReactApexChart from 'react-apexcharts';
 import Papa from 'papaparse';
 import * as tf from '@tensorflow/tfjs';
+import { saveAs } from 'file-saver';
 
 const Predchart = () => {
 
@@ -33,9 +34,20 @@ const Predchart = () => {
         month: 'short',
         year: '2-digit',
       }).replace(/ /g, '-');
-    
+      
+
       const new_row = [next_day, prediction];
-      console.log(new_row);
+      console.log(new_row)
+      // Convert new_row to CSV format
+      const new_row_csv = Papa.unparse([new_row], { header: false });
+       // Concatenate the new_row CSV with the existing CSV content
+      const updated_csv = csv + '\r\n' + new_row_csv;
+
+      // Create a Blob object for the updated CSV content
+      const blob = new Blob([updated_csv], { type: 'text/csv;charset=utf-8' });
+
+      // Save the updated file using FileSaver.js
+      saveAs(blob, '../../assets/data/Solana-data.csv');
     };
     
     

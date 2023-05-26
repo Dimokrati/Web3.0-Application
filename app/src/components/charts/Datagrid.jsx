@@ -12,7 +12,7 @@ import moment from 'moment';
 const columns = [
   { field: 'id',
     headerName: 'ID',
-    width: 20, 
+    width: 70, 
     headerClassName: 'super-app-theme--header',
   },
   {
