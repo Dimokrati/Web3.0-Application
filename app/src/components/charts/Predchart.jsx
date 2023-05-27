@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs';
 import { saveAs } from 'file-saver';
 
 const Predchart = () => {
-
+  
     const [series, setSeries] = useState([
       {
         name: 'STOCK ABC',
@@ -37,18 +37,26 @@ const Predchart = () => {
       
 
       const new_row = [next_day, prediction];
-      console.log(new_row)
-      // Convert new_row to CSV format
-      const new_row_csv = Papa.unparse([new_row], { header: false });
-       // Concatenate the new_row CSV with the existing CSV content
-      const updated_csv = csv + '\r\n' + new_row_csv;
+      // send data to the server
+      fetch('http://localhost:5000/api/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(new_row),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Success:', data);
+        }
+        )
+        .catch((error) => {
+          console.error('Error:', error);
+        }
+        );
 
-      // Create a Blob object for the updated CSV content
-      const blob = new Blob([updated_csv], { type: 'text/csv;charset=utf-8' });
+    }
 
-      // Save the updated file using FileSaver.js
-      saveAs(blob, '../../assets/data/Solana-data.csv');
-    };
     
     
     useEffect(() => {
